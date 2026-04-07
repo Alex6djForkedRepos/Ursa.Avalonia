@@ -7,9 +7,11 @@ namespace Ursa.Controls;
 
 public abstract class TimePickerBase : TemplatedControl, IInnerContentControl, IPopupInnerContent
 {
+    protected const string DEFAULT_TIME_DISPLAY_FORMAT = "HH:mm:ss";
+    
     public static readonly StyledProperty<string?> DisplayFormatProperty =
         AvaloniaProperty.Register<TimePicker, string?>(
-            nameof(DisplayFormat), "HH:mm:ss");
+            nameof(DisplayFormat), DEFAULT_TIME_DISPLAY_FORMAT);
 
     public static readonly StyledProperty<string> PanelFormatProperty = AvaloniaProperty.Register<TimePicker, string>(
         nameof(PanelFormat), "HH mm ss");
