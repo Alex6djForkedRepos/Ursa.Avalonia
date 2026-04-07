@@ -29,8 +29,7 @@
         </Setter>
     </ControlTheme>
     
-    <!--Add the theme here to fix fullscreen button placement issue, will be removed after Semi release. -->
-    <ControlTheme x:Key="{x:Type WindowDrawnDecorations}" TargetType="WindowDrawnDecorations">
+    <ControlTheme x:Key="{x:Static u:UrsaWindow.KEY_URSAWINDOW_DRAWN_DECORATIONS}" TargetType="WindowDrawnDecorations">
         <Setter Property="DefaultTitleBarHeight" Value="32" />
         <Setter Property="DefaultFrameThickness" Value="1" />
         <Setter Property="DefaultShadowThickness" Value="8" />
@@ -72,16 +71,19 @@
                                 <Button
                                     Name="PART_FullScreenButton"
                                     Theme="{StaticResource CaptionButton}"
+                                    IsVisible="{Binding $parent[u:UrsaWindow].IsFullScreenButtonVisible}"
                                     Content="{StaticResource WindowExpandGlyph}"
                                     WindowDecorationProperties.ElementRole="FullScreenButton" />
                                 <Button
                                     Name="PART_MinimizeButton"
                                     Theme="{StaticResource CaptionButton}"
+                                    IsVisible="{Binding $parent[u:UrsaWindow].IsMinimizeButtonVisible}"
                                     Content="{StaticResource WindowMinimizeGlyph}"
                                     WindowDecorationProperties.ElementRole="MinimizeButton" />
                                 <Button
                                     Name="PART_MaximizeButton"
                                     Theme="{StaticResource CaptionButton}"
+                                    IsVisible="{Binding $parent[u:UrsaWindow].IsRestoreButtonVisible}"
                                     Content="{StaticResource WindowMaximizeGlyph}"
                                     WindowDecorationProperties.ElementRole="MaximizeButton" />
                                 <Button
