@@ -1,54 +1,66 @@
 using Avalonia;
 using Avalonia.Collections;
+using Avalonia.Controls;
+using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
+using Irihi.Avalonia.Shared.Common;
 using Irihi.Avalonia.Shared.Contracts;
+using Irihi.Avalonia.Shared.Helpers;
 
 namespace Ursa.Controls;
 
-public class DatePickerBase : TemplatedControl, IInnerContentControl, IPopupInnerContent
+[TemplatePart(PART_Popup, typeof(Popup))]
+[TemplatePart(PART_StartCalendar, typeof(DatePickerCalendarView))]
+[TemplatePart(PART_EndCalendar, typeof(DatePickerCalendarView))]
+[TemplatePart(PART_StartTextBox, typeof(TextBox))]
+[TemplatePart(PART_EndTextBox, typeof(TextBox))]
+[PseudoClasses(PseudoClassName.PC_Empty)]
+public abstract class DateRangePickerBase : TemplatedControl, IInnerContentControl, IPopupInnerContent, IClearControl
 {
+    public const string PART_Popup = "PART_Popup";
+    public const string PART_StartCalendar = "PART_StartCalendar";
+    public const string PART_EndCalendar = "PART_EndCalendar";
+    public const string PART_StartTextBox = "PART_StartTextBox";
+    public const string PART_EndTextBox = "PART_EndTextBox";
+
     protected const string DEFAULT_DATE_DISPLAY_FORMAT = "yyyy-MM-dd";
-    protected const string DEFAULT_DATETIME_DISPLAY_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    
+
     public static readonly StyledProperty<string?> DisplayFormatProperty =
-        AvaloniaProperty.Register<DatePickerBase, string?>(
+        AvaloniaProperty.Register<DateRangePickerBase, string?>(
             nameof(DisplayFormat), DEFAULT_DATE_DISPLAY_FORMAT);
-    
+
     public static readonly StyledProperty<AvaloniaList<DateRange>> BlackoutDatesProperty =
-        AvaloniaProperty.Register<DatePickerBase, AvaloniaList<DateRange>>(nameof(BlackoutDates));
+        AvaloniaProperty.Register<DateRangePickerBase, AvaloniaList<DateRange>>(nameof(BlackoutDates));
 
     public static readonly StyledProperty<IDateSelector?> BlackoutDateRuleProperty =
-        AvaloniaProperty.Register<DatePickerBase, IDateSelector?>(nameof(BlackoutDateRule));
+        AvaloniaProperty.Register<DateRangePickerBase, IDateSelector?>(nameof(BlackoutDateRule));
 
     public static readonly StyledProperty<DayOfWeek> FirstDayOfWeekProperty =
-        AvaloniaProperty.Register<DatePickerBase, DayOfWeek>(
+        AvaloniaProperty.Register<DateRangePickerBase, DayOfWeek>(
             nameof(FirstDayOfWeek), DateTimeHelper.GetCurrentDateTimeFormatInfo().FirstDayOfWeek);
 
     public static readonly StyledProperty<bool> IsTodayHighlightedProperty =
-        AvaloniaProperty.Register<DatePickerBase, bool>(nameof(IsTodayHighlighted), true);
+        AvaloniaProperty.Register<DateRangePickerBase, bool>(nameof(IsTodayHighlighted), true);
 
     public static readonly StyledProperty<object?> InnerLeftContentProperty =
-        AvaloniaProperty.Register<DatePickerBase, object?>(
-            nameof(InnerLeftContent));
+        AvaloniaProperty.Register<DateRangePickerBase, object?>(nameof(InnerLeftContent));
 
     public static readonly StyledProperty<object?> InnerRightContentProperty =
-        AvaloniaProperty.Register<DatePickerBase, object?>(
-            nameof(InnerRightContent));
-    
+        AvaloniaProperty.Register<DateRangePickerBase, object?>(nameof(InnerRightContent));
+
     public static readonly StyledProperty<object?> PopupInnerTopContentProperty =
-        AvaloniaProperty.Register<DatePickerBase, object?>(
-            nameof(PopupInnerTopContent));
+        AvaloniaProperty.Register<DateRangePickerBase, object?>(nameof(PopupInnerTopContent));
 
     public static readonly StyledProperty<object?> PopupInnerBottomContentProperty =
-        AvaloniaProperty.Register<DatePickerBase, object?>(
-            nameof(PopupInnerBottomContent));
+        AvaloniaProperty.Register<DateRangePickerBase, object?>(nameof(PopupInnerBottomContent));
 
-    public static readonly StyledProperty<bool> IsDropdownOpenProperty = AvaloniaProperty.Register<DatePickerBase, bool>(
-        nameof(IsDropdownOpen), defaultBindingMode: BindingMode.TwoWay);
+    public static readonly StyledProperty<bool> IsDropdownOpenProperty =
+        AvaloniaProperty.Register<DateRangePickerBase, bool>(
+            nameof(IsDropdownOpen), defaultBindingMode: BindingMode.TwoWay);
 
-    public static readonly StyledProperty<bool> IsReadonlyProperty = AvaloniaProperty.Register<DatePickerBase, bool>(
-        nameof(IsReadonly));
+    public static readonly StyledProperty<bool> IsReadonlyProperty =
+        AvaloniaProperty.Register<DateRangePickerBase, bool>(nameof(IsReadonly));
 
     public AvaloniaList<DateRange> BlackoutDates
     {
@@ -109,10 +121,12 @@ public class DatePickerBase : TemplatedControl, IInnerContentControl, IPopupInne
         get => GetValue(PopupInnerBottomContentProperty);
         set => SetValue(PopupInnerBottomContentProperty, value);
     }
-    
+
     public string? DisplayFormat
     {
         get => GetValue(DisplayFormatProperty);
         set => SetValue(DisplayFormatProperty, value);
     }
+
+    public abstract void Clear();
 }

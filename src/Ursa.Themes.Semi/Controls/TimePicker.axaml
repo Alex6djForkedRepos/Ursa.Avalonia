@@ -100,7 +100,7 @@
         </Setter>
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type u:TimePicker}" TargetType="u:TimePicker">
+    <ControlTheme x:Key="{x:Type u:TimePickerBase}" TargetType="u:TimePickerBase">
         <Setter Property="Background" Value="{DynamicResource TextBoxDefaultBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource TextBoxForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxDefaultBorderBrush}" />
@@ -109,7 +109,7 @@
         <Setter Property="MinHeight" Value="32" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource TextBoxPlaceholderForeground}" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="u:TimePicker">
+            <ControlTemplate TargetType="u:TimePickerBase">
                 <DataValidationErrors>
                     <Panel
                         x:Name="LayoutRoot"
@@ -124,7 +124,7 @@
                             CornerRadius="{TemplateBinding CornerRadius}" />
                         <Grid ColumnDefinitions="*, Auto">
                             <TextBox
-                                Name="{x:Static u:TimePicker.PART_TextBox}"
+                                Name="{x:Static u:TimePickerBase.PART_TextBox}"
                                 Grid.Column="0"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Stretch"
@@ -140,7 +140,7 @@
                                 Name="ClearButton"
                                 Grid.Column="1"
                                 Margin="8,0"
-                                Command="{Binding $parent[u:TimePicker].Clear}"
+                                Command="{Binding $parent[iri:IClearControl].Clear}"
                                 Content="{DynamicResource IconButtonClearData}"
                                 Focusable="False"
                                 IsVisible="False"
@@ -150,6 +150,7 @@
                                 Grid.Column="1"
                                 Margin="8,0"
                                 Data="{DynamicResource TimePickerIconGlyph}"
+                                IsVisible="{Binding !#ClearButton.IsVisible}"
                                 Focusable="False"
                                 Theme="{DynamicResource InnerPathIcon}" />
                             <Popup
@@ -172,7 +173,7 @@
                                             <Button
                                                 Margin="8"
                                                 HorizontalAlignment="Right"
-                                                Command="{Binding $parent[u:TimePicker].Confirm}"
+                                                Command="{Binding $parent[u:TimePickerBase].Confirm}"
                                                 Content="{DynamicResource STRING_DATE_TIME_CONFIRM}" />
                                         </StackPanel>
                                         <ContentPresenter
@@ -188,7 +189,7 @@
                                             DockPanel.Dock="Bottom"
                                             IsVisible="{TemplateBinding PopupInnerBottomContent,Converter={x:Static ObjectConverters.IsNotNull}}" />
                                         <u:TimePickerPresenter
-                                            Name="{x:Static u:TimePicker.PART_Presenter}"
+                                            Name="{x:Static u:TimePickerBase.PART_Presenter}"
                                             NeedsConfirmation="{TemplateBinding NeedConfirmation}"
                                             PanelFormat="{TemplateBinding PanelFormat}" />
                                     </DockPanel>
@@ -201,11 +202,8 @@
         </Setter>
 
         <Style Selector="^.clearButton, ^.ClearButton">
-            <Style Selector="^:pointerover /template/ Button#ClearButton">
-                <Setter Property="IsVisible" Value="{Binding $parent[u:TimePicker].SelectedTime, Converter={x:Static ObjectConverters.IsNotNull}}" />
-            </Style>
-            <Style Selector="^:pointerover /template/ PathIcon#PART_Button">
-                <Setter Property="IsVisible" Value="{Binding $parent[u:TimePicker].SelectedTime, Converter={x:Static ObjectConverters.IsNull}}" />
+            <Style Selector="^:not(:empty):pointerover /template/ Button#ClearButton">
+                <Setter Property="IsVisible" Value="True" />
             </Style>
         </Style>
 
