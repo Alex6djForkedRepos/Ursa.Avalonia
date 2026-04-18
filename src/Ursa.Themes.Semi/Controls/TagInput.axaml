@@ -6,22 +6,15 @@
         <u:ClosableTag Content="Closable Tag" />
     </Design.PreviewWith>
     <ControlTheme x:Key="{x:Type u:TagInput}" TargetType="u:TagInput">
-        <Setter Property="InputTheme" Value="{DynamicResource TagInputTextBoxTheme}" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="MinHeight" Value="{DynamicResource TextBoxDefaultHeight}" />
-        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="PlaceholderForeground" Value="{DynamicResource TextBoxPlaceholderForeground}" />
-        <Setter Property="ItemTemplate">
-            <DataTemplate>
-                <u:ClosableTag Command="{Binding $parent[u:TagInput].Close}" Content="{ReflectionBinding}" />
-            </DataTemplate>
-        </Setter>
+        <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="Template">
             <ControlTemplate TargetType="u:TagInput">
                 <Border
                     Name="PART_RootBorder"
                     MinHeight="30"
-                    Padding="8,4"
                     VerticalAlignment="Stretch"
                     Background="{DynamicResource TextBoxDefaultBackground}"
                     BorderBrush="{DynamicResource TextBoxDefaultBorderBrush}"
@@ -30,24 +23,27 @@
                     <Panel HorizontalAlignment="Stretch">
                         <TextBlock
                             Name="{x:Static u:TagInput.PART_Placeholder}"
-                            Opacity="0.5"
+                            Margin="{DynamicResource TextBoxContentPadding}"
                             IsVisible="False"
                             VerticalAlignment="Center"
                             Foreground="{TemplateBinding PlaceholderForeground}"
                             Text="{TemplateBinding PlaceholderText}" />
-                        <ItemsControl
+                        <u:MultiComboBoxSelectedItemList
                             Name="PART_ItemsControl"
                             HorizontalAlignment="Stretch"
-                            VerticalAlignment="Top"
+                            RemoveCommand="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Close}"
                             ItemTemplate="{TemplateBinding ItemTemplate}"
-                            ItemsSource="{TemplateBinding Items}">
-
-                            <ItemsControl.ItemsPanel>
+                            ItemsSource="{TemplateBinding Tags}">
+                            <u:MultiComboBoxSelectedItemList.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <u:TagInputPanel VerticalAlignment="Top" />
+                                    <u:WrapPanelWithTrailingItem TrailingWrapWidth="24" >
+                                        <u:WrapPanelWithTrailingItem.TrailingItem>
+                                            <TextBox VerticalAlignment="Center" MinHeight="24" Margin="{DynamicResource TextBoxContentPadding}" Theme="{DynamicResource TagInputTextBoxTheme}" />
+                                        </u:WrapPanelWithTrailingItem.TrailingItem>
+                                    </u:WrapPanelWithTrailingItem>
                                 </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-                        </ItemsControl>
+                            </u:MultiComboBoxSelectedItemList.ItemsPanel>
+                        </u:MultiComboBoxSelectedItemList>
                     </Panel>
                 </Border>
             </ControlTemplate>
@@ -79,7 +75,7 @@
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Template">
             <ControlTemplate TargetType="TextBox">
-                <Border Padding="0,4">
+                <Border >
                     <ScrollViewer
                         Width="{Binding $parent[TextBox].Bounds.Width}"
                         AllowAutoHide="{TemplateBinding (ScrollViewer.AllowAutoHide)}"
