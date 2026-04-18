@@ -4,6 +4,7 @@
     xmlns:u="https://irihi.tech/ursa">
     <ControlTheme x:Key="{x:Type u:NumericUpDown}" TargetType="{x:Type u:NumericUpDown}">
         <Setter Property="CornerRadius" Value="{DynamicResource NumericUpDownCornerRadius}" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource TextBoxPlaceholderForeground}" />
         <Setter Property="MinHeight" Value="{DynamicResource NumericUpDownDefaultHeight}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="u:NumericUpDown">
@@ -33,7 +34,8 @@
                                 InnerRightContent="{TemplateBinding InnerRightContent}"
                                 TextWrapping="NoWrap"
                                 Theme="{DynamicResource NonErrorTextBox}"
-                                Watermark="{TemplateBinding Watermark}" />
+                                PlaceholderText="{TemplateBinding PlaceholderText}"
+                                PlaceholderForeground="{TemplateBinding PlaceholderForeground}" />
                             <Panel
                                 Name="PART_DragPanel"
                                 HorizontalAlignment="Stretch"
@@ -69,6 +71,13 @@
         </Style>
         <Style Selector="^.Small">
             <Setter Property="MinHeight" Value="{DynamicResource NumericUpDownSmallHeight}" />
+        </Style>
+        
+        <Style Selector="^.Split /template/ ButtonSpinner#PART_Spinner">
+            <Setter Property="Theme" Value="{DynamicResource SplitButtonSpinner}" />
+        </Style>
+        <Style Selector="^.Split /template/ TextBox#PART_TextBox">
+            <Setter Property="CornerRadius" Value="0" />
         </Style>
     </ControlTheme>
 </ResourceDictionary>

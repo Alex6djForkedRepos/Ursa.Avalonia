@@ -11,6 +11,8 @@ using Avalonia.Input.TextInput;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
+using Avalonia.VisualTree;
+
 // ReSharper disable InconsistentNaming
 
 namespace Ursa.Controls;
@@ -156,7 +158,7 @@ public class IPv4Box : TemplatedControl
     protected override void OnKeyDown(KeyEventArgs e)
     {
         _currentActivePresenter ??= _presenters[0];
-        var keymap = TopLevel.GetTopLevel(this)?.PlatformSettings?.HotkeyConfiguration;
+        var keymap = this.GetPlatformSettings()?.HotkeyConfiguration;
         bool Match(List<KeyGesture> gestures) => gestures.Any(g => g.Matches(e));
         if (e.Key is Key.Enter or Key.Return)
         {
@@ -329,7 +331,7 @@ public class IPv4Box : TemplatedControl
         e.Handled = true;
     }
 
-    protected override void OnLostFocus(RoutedEventArgs e)
+    protected override void OnLostFocus(FocusChangedEventArgs e)
     {
         base.OnLostFocus(e);
         if (IsTargetByNumPad)
@@ -352,7 +354,7 @@ public class IPv4Box : TemplatedControl
     }
 
 
-    protected override void OnGotFocus(GotFocusEventArgs e)
+    protected override void OnGotFocus(FocusChangedEventArgs e)
     {
         _currentActivePresenter = _firstText;
         if (_currentActivePresenter is null)
@@ -618,7 +620,7 @@ public class IPv4Box : TemplatedControl
     {
         IClipboard? clipboard = TopLevel.GetTopLevel(this)?.Clipboard;
         if (clipboard is null) return;
-        var s = await clipboard.GetTextAsync();
+        var s = await clipboard.TryGetTextAsync();
         if (s is not null && IPAddress.TryParse(s, out var address))
         {
             IPAddress = address;

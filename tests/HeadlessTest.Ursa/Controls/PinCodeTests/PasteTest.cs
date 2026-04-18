@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using Avalonia.Headless;
 using Avalonia.Headless.XUnit;
 using Avalonia.Input;
+using Avalonia.Input.Platform;
 using Avalonia.Threading;
 using CommunityToolkit.Mvvm.Input;
 using Ursa.Controls;
@@ -11,7 +12,7 @@ namespace HeadlessTest.Ursa.Controls.PinCodeTests;
 public class PasteTest
 {
     [AvaloniaFact]
-    public async void Paste_Should_Insert_Text()
+    public async Task Paste_Should_Insert_Text()
     {
         var window = new Window();
         bool commandInvoked = false;
@@ -34,7 +35,7 @@ public class PasteTest
     }
     
     [AvaloniaFact]
-    public async void Paste_Should_Insert_Text_When_Text_Is_Shorter()
+    public async Task Paste_Should_Insert_Text_When_Text_Is_Shorter()
     {
         var window = new Window();
         bool commandInvoked = false;
@@ -56,7 +57,7 @@ public class PasteTest
     }
     
     [AvaloniaFact]
-    public async void Paste_Should_Insert_Text_When_Text_Is_Longer()
+    public async Task Paste_Should_Insert_Text_When_Text_Is_Longer()
     {
         var window = new Window();
         bool commandInvoked = false;
@@ -78,7 +79,7 @@ public class PasteTest
     }
     
     [AvaloniaFact]
-    public async void Paste_Should_Not_Insert_Text_When_Text_Is_In_Invalid_Mode()
+    public async Task Paste_Should_Not_Insert_Text_When_Text_Is_In_Invalid_Mode()
     {
         var window = new Window();
         var commandInvoked = false;

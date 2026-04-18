@@ -8,7 +8,7 @@
     <Design.PreviewWith>
         <StackPanel Height="300">
             <u:TreeComboBox
-                Watermark="Please Select"
+                PlaceholderText="Please Select"
                 Width="300"
                 MaxHeight="200">
                 <u:TreeComboBoxItem Header="Option 1">
@@ -35,6 +35,7 @@
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="MinHeight" Value="{DynamicResource ComboBoxDefaultHeight}" />
         <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="PlaceholderForeground" Value="{DynamicResource TextBoxPlaceholderForeground}" />
         <Setter Property="Template">
             <ControlTemplate TargetType="u:TreeComboBox">
                 <Grid MinWidth="{TemplateBinding MinHeight}" ColumnDefinitions="Auto, *, Auto, Auto">
@@ -61,11 +62,11 @@
                         Margin="{TemplateBinding Padding}"
                         HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                         VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                        Foreground="{TemplateBinding Foreground}"
+                        Foreground="{TemplateBinding PlaceholderForeground}"
                         IsVisible="{TemplateBinding SelectionBoxItem,
                                                     Converter={x:Static ObjectConverters.IsNull}}"
                         Opacity="0.3"
-                        Text="{TemplateBinding Watermark}"
+                        Text="{TemplateBinding PlaceholderText}"
                         TextTrimming="CharacterEllipsis" />
                     <ContentPresenter
                         Grid.Column="1"
@@ -220,7 +221,7 @@
                 <Setter Property="Background" Value="{DynamicResource DataValidationErrorsBackground}" />
             </Style>
             <Style Selector="^:pointerover /template/ Border#Background">
-                <Setter Property="Background" Value="{DynamicResource DataValidationErrorsPointerOverBackground}" />
+                <Setter Property="Background" Value="{DynamicResource DataValidationErrorsPointeroverBackground}" />
                 <Setter Property="BorderBrush" Value="Transparent" />
             </Style>
             <Style Selector="^:pressed /template/ Border#Background">

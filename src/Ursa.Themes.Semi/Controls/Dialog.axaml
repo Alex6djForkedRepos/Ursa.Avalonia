@@ -28,7 +28,7 @@
                         Padding="0"
                         HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                         VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                        Background="{DynamicResource SemiColorBackground2}"
+                        Background="{DynamicResource DialogBackground}"
                         Classes="Shadow"
                         ClipToBounds="False"
                         CornerRadius="{TemplateBinding CornerRadius}"
@@ -130,7 +130,7 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type u:DefaultDialogControl}" TargetType="u:DefaultDialogControl">
+    <ControlTheme x:Key="{x:Type u:StandardDialogControl}" TargetType="u:StandardDialogControl">
         <Setter Property="MinWidth" Value="{DynamicResource DialogMinWidth}" />
         <Setter Property="MinHeight" Value="{DynamicResource DialogMinHeight}" />
         <Setter Property="CornerRadius" Value="{DynamicResource DialogCornerRadius}" />
@@ -142,15 +142,15 @@
             </Transitions>
         </Setter>
         <Setter Property="Template">
-            <ControlTemplate TargetType="u:DefaultDialogControl">
+            <ControlTemplate TargetType="u:StandardDialogControl">
                 <Panel>
                     <Border
                         Name="PART_Border"
                         Padding="0"
                         HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
                         VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                        Background="{DynamicResource SemiColorBackground2}"
-                        BoxShadow="0 0 8 0 #1A000000"
+                        Background="{DynamicResource DialogBackground}"
+                        BoxShadow="{DynamicResource DialogBoxShadow}"
                         Classes="Shadow"
                         ClipToBounds="False"
                         CornerRadius="{TemplateBinding CornerRadius}"
@@ -206,10 +206,10 @@
                                     Margin="24,0,24,24"
                                     HorizontalAlignment="Right"
                                     ColumnDefinitions="Auto, Auto, Auto, Auto">
-                                    <Button Name="{x:Static u:DefaultDialogControl.PART_CancelButton}" Margin="8,0,0,0" />
-                                    <Button Name="{x:Static u:DefaultDialogControl.PART_NoButton}" Margin="8,0,0,0" />
-                                    <Button Name="{x:Static u:DefaultDialogControl.PART_YesButton}" Margin="8,0,0,0" />
-                                    <Button Name="{x:Static u:DefaultDialogControl.PART_OKButton}" Margin="8,0,0,0" />
+                                    <Button Name="{x:Static u:StandardDialogControl.PART_CancelButton}" Margin="8,0,0,0" />
+                                    <Button Name="{x:Static u:StandardDialogControl.PART_NoButton}" Margin="8,0,0,0" />
+                                    <Button Name="{x:Static u:StandardDialogControl.PART_YesButton}" Margin="8,0,0,0" />
+                                    <Button Name="{x:Static u:StandardDialogControl.PART_OKButton}" Margin="8,0,0,0" />
                                 </Grid>
 
                             </Grid>
@@ -276,7 +276,7 @@
             <Style Selector="^ /template/ PathIcon#PART_Icon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Data" Value="{DynamicResource DialogInformationIconGlyph}" />
-                <Setter Property="Foreground" Value="{DynamicResource SemiBlue6}" />
+                <Setter Property="Foreground" Value="{DynamicResource DialogInfoIconForeground}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_OKButton">
                 <Setter Property="iri:ClassHelper.Classes" Value="Primary" />
@@ -295,7 +295,7 @@
             <Style Selector="^ /template/ PathIcon#PART_Icon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Data" Value="{DynamicResource DialogWarningIconGlyph}" />
-                <Setter Property="Foreground" Value="{DynamicResource SemiOrange6}" />
+                <Setter Property="Foreground" Value="{DynamicResource DialogWarningIconForeground}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_OKButton">
                 <Setter Property="iri:ClassHelper.Classes" Value="Warning" />
@@ -317,7 +317,7 @@
             <Style Selector="^ /template/ PathIcon#PART_Icon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Data" Value="{DynamicResource DialogErrorIconGlyph}" />
-                <Setter Property="Foreground" Value="{DynamicResource SemiRed6}" />
+                <Setter Property="Foreground" Value="{DynamicResource DialogErrorIconForeground}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_OKButton">
                 <Setter Property="iri:ClassHelper.Classes" Value="Danger" />
@@ -336,7 +336,7 @@
             <Style Selector="^ /template/ PathIcon#PART_Icon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Data" Value="{DynamicResource DialogQuestionIconGlyph}" />
-                <Setter Property="Foreground" Value="{DynamicResource SemiBlue6}" />
+                <Setter Property="Foreground" Value="{DynamicResource DialogQuestionIconForeground}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_OKButton">
                 <Setter Property="iri:ClassHelper.Classes" Value="Primary" />
@@ -355,7 +355,7 @@
             <Style Selector="^ /template/ PathIcon#PART_Icon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Data" Value="{DynamicResource DialogSuccessIconGlyph}" />
-                <Setter Property="Foreground" Value="{DynamicResource SemiGreen6}" />
+                <Setter Property="Foreground" Value="{DynamicResource DialogSuccessIconForeground}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_OKButton">
                 <Setter Property="iri:ClassHelper.Classes" Value="Success" />
@@ -429,9 +429,9 @@
         </Style>
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type u:DialogWindow}" TargetType="u:DialogWindow">
+    <ControlTheme x:Key="{x:Type u:CustomDialogWindow}" TargetType="u:CustomDialogWindow">
         <Setter Property="Title" Value="{x:Null}" />
-        <Setter Property="Background" Value="{DynamicResource SemiColorBackground2}" />
+        <Setter Property="Background" Value="{DynamicResource DialogBackground}" />
         <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource WindowDefaultBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource WindowDefaultForeground}" />
         <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
@@ -441,22 +441,14 @@
         <Setter Property="WindowStartupLocation" Value="CenterOwner" />
         <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="1" />
         <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
-        <Setter Property="ExtendClientAreaChromeHints" Value="SystemChrome" />
         <Setter Property="MinWidth" Value="{DynamicResource DialogMinWidth}" />
         <Setter Property="MinHeight" Value="{DynamicResource DialogMinHeight}" />
-        <Setter Property="SystemDecorations">
-            <OnPlatform>
-                <OnPlatform.Windows>
-                    <SystemDecorations>Full</SystemDecorations>
-                </OnPlatform.Windows>
-                <OnPlatform.Default>
-                    <SystemDecorations>BorderOnly</SystemDecorations>
-                </OnPlatform.Default>
-            </OnPlatform>
-        </Setter>
+        <Setter Property="WindowDecorations" Value="BorderOnly" />
         <Setter Property="CanResize" Value="False" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="u:DialogWindow">
+            <ControlTemplate TargetType="u:CustomDialogWindow">
                 <Panel>
                     <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
                     <Border
@@ -468,13 +460,16 @@
                     <Panel Margin="{TemplateBinding WindowDecorationMargin}" Background="Transparent" />
                     <VisualLayerManager>
                         <Grid RowDefinitions="Auto, *">
-                            <ContentPresenter
+                            <ScrollViewer
                                 Grid.Row="0"
                                 Grid.RowSpan="2"
-                                Content="{TemplateBinding Content}" />
+                                HorizontalScrollBarVisibility="{Binding (ScrollViewer.HorizontalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}"
+                                VerticalScrollBarVisibility="{Binding (ScrollViewer.VerticalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}">
+                                <ContentPresenter Content="{TemplateBinding Content}" />
+                            </ScrollViewer>
                             <Grid Grid.Row="0" ColumnDefinitions="*, Auto">
                                 <Panel
-                                    Name="{x:Static u:DialogWindow.PART_TitleArea}"
+                                    Name="{x:Static u:CustomDialogWindow.PART_TitleArea}"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="2"
                                     Background="Transparent" />
@@ -501,9 +496,9 @@
         </Setter>
     </ControlTheme>
 
-    <ControlTheme x:Key="{x:Type u:DefaultDialogWindow}" TargetType="u:DefaultDialogWindow">
+    <ControlTheme x:Key="{x:Type u:StandardDialogWindow}" TargetType="u:StandardDialogWindow">
         <Setter Property="Title" Value="{x:Null}" />
-        <Setter Property="Background" Value="{DynamicResource SemiColorBackground2}" />
+        <Setter Property="Background" Value="{DynamicResource DialogBackground}" />
         <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource WindowDefaultBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource WindowDefaultForeground}" />
         <Setter Property="FontSize" Value="{DynamicResource DefaultFontSize}" />
@@ -513,22 +508,14 @@
         <Setter Property="WindowStartupLocation" Value="CenterOwner" />
         <Setter Property="ExtendClientAreaTitleBarHeightHint" Value="1" />
         <Setter Property="ExtendClientAreaToDecorationsHint" Value="True" />
-        <Setter Property="ExtendClientAreaChromeHints" Value="SystemChrome" />
         <Setter Property="MinWidth" Value="{DynamicResource DialogMinWidth}" />
         <Setter Property="MinHeight" Value="{DynamicResource DialogMinHeight}" />
-        <Setter Property="SystemDecorations">
-            <OnPlatform>
-                <OnPlatform.Windows>
-                    <SystemDecorations>Full</SystemDecorations>
-                </OnPlatform.Windows>
-                <OnPlatform.Default>
-                    <SystemDecorations>BorderOnly</SystemDecorations>
-                </OnPlatform.Default>
-            </OnPlatform>
-        </Setter>
+        <Setter Property="WindowDecorations" Value="BorderOnly" />
         <Setter Property="CanResize" Value="False" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Template">
-            <ControlTemplate TargetType="u:DefaultDialogWindow">
+            <ControlTemplate TargetType="u:StandardDialogWindow">
                 <Panel>
                     <Border Name="PART_TransparencyFallback" IsHitTestVisible="False" />
                     <Border
@@ -540,14 +527,18 @@
                     <Panel Margin="{TemplateBinding WindowDecorationMargin}" Background="Transparent" />
                     <VisualLayerManager>
                         <Grid RowDefinitions="Auto, *, Auto">
-                            <ContentPresenter
-                                Name="PART_ContentPresenter"
+                            <ScrollViewer
                                 Grid.Row="1"
                                 Margin="24,8"
-                                Content="{TemplateBinding Content}" />
+                                HorizontalScrollBarVisibility="{Binding (ScrollViewer.HorizontalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}"
+                                VerticalScrollBarVisibility="{Binding (ScrollViewer.VerticalScrollBarVisibility), RelativeSource={RelativeSource TemplatedParent}}">
+                                <ContentPresenter
+                                    Name="PART_ContentPresenter"
+                                    Content="{TemplateBinding Content}" />
+                            </ScrollViewer>
                             <Grid Grid.Row="0" ColumnDefinitions="Auto, *, Auto">
                                 <Panel
-                                    Name="{x:Static u:DialogWindow.PART_TitleArea}"
+                                    Name="{x:Static u:CustomDialogWindow.PART_TitleArea}"
                                     Grid.Column="0"
                                     Grid.ColumnSpan="3"
                                     Background="Transparent" />
@@ -582,10 +573,10 @@
                                 Margin="24,0,24,24"
                                 HorizontalAlignment="Right"
                                 Orientation="Horizontal">
-                                <Button Name="{x:Static u:DefaultDialogControl.PART_CancelButton}" Margin="8,0,0,0" />
-                                <Button Name="{x:Static u:DefaultDialogControl.PART_NoButton}" Margin="8,0,0,0" />
-                                <Button Name="{x:Static u:DefaultDialogControl.PART_YesButton}" Margin="8,0,0,0" />
-                                <Button Name="{x:Static u:DefaultDialogControl.PART_OKButton}" Margin="8,0,0,0" />
+                                <Button Name="{x:Static u:StandardDialogControl.PART_CancelButton}" Margin="8,0,0,0" />
+                                <Button Name="{x:Static u:StandardDialogControl.PART_NoButton}" Margin="8,0,0,0" />
+                                <Button Name="{x:Static u:StandardDialogControl.PART_YesButton}" Margin="8,0,0,0" />
+                                <Button Name="{x:Static u:StandardDialogControl.PART_OKButton}" Margin="8,0,0,0" />
                             </StackPanel>
 
                         </Grid>
@@ -641,7 +632,7 @@
             <Style Selector="^ /template/ PathIcon#PART_Icon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Data" Value="{DynamicResource DialogInformationIconGlyph}" />
-                <Setter Property="Foreground" Value="{DynamicResource SemiBlue6}" />
+                <Setter Property="Foreground" Value="{DynamicResource DialogInfoIconForeground}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_OKButton">
                 <Setter Property="iri:ClassHelper.Classes" Value="Primary" />
@@ -660,7 +651,7 @@
             <Style Selector="^ /template/ PathIcon#PART_Icon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Data" Value="{DynamicResource DialogWarningIconGlyph}" />
-                <Setter Property="Foreground" Value="{DynamicResource SemiOrange6}" />
+                <Setter Property="Foreground" Value="{DynamicResource DialogWarningIconForeground}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_OKButton">
                 <Setter Property="iri:ClassHelper.Classes" Value="Warning" />
@@ -682,7 +673,7 @@
             <Style Selector="^ /template/ PathIcon#PART_Icon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Data" Value="{DynamicResource DialogErrorIconGlyph}" />
-                <Setter Property="Foreground" Value="{DynamicResource SemiRed6}" />
+                <Setter Property="Foreground" Value="{DynamicResource DialogErrorIconForeground}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_OKButton">
                 <Setter Property="iri:ClassHelper.Classes" Value="Danger" />
@@ -701,7 +692,7 @@
             <Style Selector="^ /template/ PathIcon#PART_Icon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Data" Value="{DynamicResource DialogQuestionIconGlyph}" />
-                <Setter Property="Foreground" Value="{DynamicResource SemiBlue6}" />
+                <Setter Property="Foreground" Value="{DynamicResource DialogQuestionIconForeground}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_OKButton">
                 <Setter Property="iri:ClassHelper.Classes" Value="Primary" />
@@ -720,7 +711,7 @@
             <Style Selector="^ /template/ PathIcon#PART_Icon">
                 <Setter Property="IsVisible" Value="True" />
                 <Setter Property="Data" Value="{DynamicResource DialogSuccessIconGlyph}" />
-                <Setter Property="Foreground" Value="{DynamicResource SemiGreen6}" />
+                <Setter Property="Foreground" Value="{DynamicResource DialogSuccessIconForeground}" />
             </Style>
             <Style Selector="^ /template/ Button#PART_OKButton">
                 <Setter Property="iri:ClassHelper.Classes" Value="Success" />

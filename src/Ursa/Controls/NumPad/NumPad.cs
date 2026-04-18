@@ -79,7 +79,7 @@ public class NumPad : TemplatedControl
         }
     }
 
-    private static void OnTargetGotFocus(object? sender, GotFocusEventArgs e)
+    private static void OnTargetGotFocus(object? sender, FocusChangedEventArgs e)
     {
         if (sender is not InputElement element) return;
         var existing = OverlayDialog.Recall<NumPad>(null);
@@ -111,7 +111,7 @@ public class NumPad : TemplatedControl
             Buttons = DialogButton.None,
             OnDialogControlClosed = (object? _, object? _) => { numPad.Target?.Focus(); }
         };
-        OverlayDialog.Show(numPad, new object(), options: options);
+        OverlayDialog.ShowStandard(numPad, new object(), options: options);
     }
 
     public void ProcessClick(object o)

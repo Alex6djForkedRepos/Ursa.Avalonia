@@ -1,6 +1,10 @@
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.Chrome;
 using Avalonia.Controls.Primitives;
+using Avalonia.Interactivity;
+using Avalonia.LogicalTree;
+using Avalonia.Styling;
 
 namespace Ursa.Controls;
 
@@ -9,6 +13,7 @@ namespace Ursa.Controls;
 /// </summary>
 public class UrsaWindow : Window
 {
+    public const string KEY_URSAWINDOW_DRAWN_DECORATIONS = "KEY_URSAWINDOW_DRAWN_DECORATIONS";
     /// <summary>
     /// The name of the dialog host part in the control template.
     /// </summary>
@@ -24,7 +29,6 @@ public class UrsaWindow : Window
     /// <summary>
     /// Defines the visibility of the minimize button.
     /// </summary>
-    [Obsolete("Will be removed in Ursa 2.0. Use Window.CanMinimize property instead.")]
     public static readonly StyledProperty<bool> IsMinimizeButtonVisibleProperty =
         AvaloniaProperty.Register<UrsaWindow, bool>(
             nameof(IsMinimizeButtonVisible), true);
@@ -32,7 +36,6 @@ public class UrsaWindow : Window
     /// <summary>
     /// Defines the visibility of the restore button.
     /// </summary>
-    [Obsolete("Will be removed in Ursa 2.0. Use Window.CanMaximize property instead.")]
     public static readonly StyledProperty<bool> IsRestoreButtonVisibleProperty =
         AvaloniaProperty.Register<UrsaWindow, bool>(
             nameof(IsRestoreButtonVisible), true);
@@ -103,7 +106,6 @@ public class UrsaWindow : Window
     /// <summary>
     /// Gets or sets a value indicating whether the minimize button is visible.
     /// </summary>
-    [Obsolete("Will be removed in Ursa 2.0. Use Window.CanMinimize property instead.")]
     public bool IsMinimizeButtonVisible
     {
         get => GetValue(IsMinimizeButtonVisibleProperty);
@@ -113,7 +115,6 @@ public class UrsaWindow : Window
     /// <summary>
     /// Gets or sets a value indicating whether the restore button is visible.
     /// </summary>
-    [Obsolete("Will be removed in Ursa 2.0. Use Window.CanMaximize property instead.")]
     public bool IsRestoreButtonVisible
     {
         get => GetValue(IsRestoreButtonVisibleProperty);
@@ -183,12 +184,49 @@ public class UrsaWindow : Window
         set => SetValue(TitleBarMarginProperty, value);
     }
     
+    private TitleBar? _titleBar;
+    private OverlayDialogHost? _dialogHost;
     /// <inheritdoc/>
     protected override void OnApplyTemplate(TemplateAppliedEventArgs e)
     {
         base.OnApplyTemplate(e);
-        var host = e.NameScope.Find<OverlayDialogHost>(PART_DialogHost);
-        if (host is not null) LogicalChildren.Add(host);
+        _dialogHost = e.NameScope.Find<OverlayDialogHost>(PART_DialogHost);
+        if (_dialogHost is not null) LogicalChildren.Add(_dialogHost);
+        _titleBar = e.NameScope.Find<TitleBar>("PART_TitleBar");
+        // TODO: To be removed after https://github.com/AvaloniaUI/Avalonia/pull/21061 merged. 
+        // TODO(ursa#window-drawn-decorations-theme-workaround): Remove this workaround once Avalonia
+        // supports specifying window decorations for a specific Window theme directly. This applies
+        // a theme resource to WindowDrawnDecorations manually because that cannot currently be done
+        // through the Window theme itself.
+        if (this.TryFindResource(KEY_URSAWINDOW_DRAWN_DECORATIONS, out var themeResource))
+        {
+            var decorations = this.GetLogicalDescendants().OfType<WindowDrawnDecorations>().FirstOrDefault();
+            if (themeResource is not ControlTheme theme || theme.TargetType != typeof(WindowDrawnDecorations)) return;
+            decorations?.Theme = themeResource as ControlTheme;
+            decorations?.ApplyStyling();
+        }
+    }
+
+    protected override void OnLoaded(RoutedEventArgs e)
+    {
+        base.OnLoaded(e);
+        var decorations = this.GetLogicalDescendants().OfType<WindowDrawnDecorations>().FirstOrDefault();
+        var buttons = decorations?.GetLogicalDescendants().OfType<Button>().ToList();
+        Button? maxX = null;
+        if (buttons is { Count: > 0 })
+        {
+            maxX = buttons.MaxBy(a => a.Bounds.X);
+        }
+        var marginRight = maxX?.Bounds.Right;
+        var height = decorations?.TitleBarHeight;
+        if (marginRight is not null && _titleBar is not null)
+        {
+            _titleBar.Margin = new Thickness(_titleBar.Margin.Left, _titleBar.Margin.Top, marginRight.Value,
+                _titleBar.Margin.Bottom);
+            _titleBar.MinHeight = height ?? 0;
+        }
+        var dialogHostPadding = new Thickness(0, height ?? 0, 0, 0);
+        _dialogHost?.SafePadding = dialogHostPadding;
     }
 
     /// <summary>

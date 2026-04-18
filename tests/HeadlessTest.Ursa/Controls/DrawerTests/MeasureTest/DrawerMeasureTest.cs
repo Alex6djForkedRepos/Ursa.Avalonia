@@ -15,7 +15,7 @@ public class DrawerMeasureTest
     [InlineData(Position.Right)]
     [InlineData(Position.Top)]
     [InlineData(Position.Bottom)]
-    public async void Default_Drawer_Is_Constrained_When_Content_Is_Large(Position position)
+    public async Task Default_Drawer_Is_Constrained_When_Content_Is_Large(Position position)
     {
         var window = new UrsaWindow
         {
@@ -29,10 +29,10 @@ public class DrawerMeasureTest
         };
         window.Show();
         Dispatcher.UIThread.RunJobs();
-        _ = Drawer.ShowModal(textBlock, "hello world", null,
+        _ = OverlayDrawer.ShowStandardAsync(textBlock, "hello world", null,
             new DrawerOptions { Position = position, TopLevelHashCode = window.GetHashCode() });
         await Task.Delay(TimeSpan.FromSeconds(0.1));
-        var dialogControl = window.GetVisualDescendants().OfType<DefaultDrawerControl>().SingleOrDefault();
+        var dialogControl = window.GetVisualDescendants().OfType<StandardDrawerControl>().SingleOrDefault();
         Assert.NotNull(dialogControl);
         Assert.True(dialogControl.Bounds.Width <= window.Bounds.Width);
         Assert.True(dialogControl.Bounds.Height <= window.Bounds.Height);
@@ -43,7 +43,7 @@ public class DrawerMeasureTest
     [InlineData(Position.Right)]
     [InlineData(Position.Top)]
     [InlineData(Position.Bottom)]
-    public async void Custom_Drawer_Is_Constrained_When_Content_Is_Large(Position position)
+    public async Task Custom_Drawer_Is_Constrained_When_Content_Is_Large(Position position)
     {
         var window = new UrsaWindow
         {
@@ -57,7 +57,7 @@ public class DrawerMeasureTest
         };
         window.Show();
         Dispatcher.UIThread.RunJobs();
-        Drawer.ShowCustom(textBlock, "hello world", null,
+        OverlayDrawer.ShowCustom(textBlock, "hello world", null,
             new DrawerOptions { Position = position, TopLevelHashCode = window.GetHashCode() });
         await Task.Delay(TimeSpan.FromSeconds(0.1));
         var dialogControl = window.GetVisualDescendants().OfType<CustomDrawerControl>().SingleOrDefault();

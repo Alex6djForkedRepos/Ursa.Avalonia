@@ -8,6 +8,7 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Media;
 using Avalonia.Media.TextFormatting;
+using Avalonia.VisualTree;
 using Irihi.Avalonia.Shared.Helpers;
 
 namespace Ursa.Controls;
@@ -220,7 +221,7 @@ public class TimeBox : TemplatedControl
     protected override void OnKeyDown(KeyEventArgs e)
     {
         if (_currentActiveSectionIndex is null) return;
-        var keymap = TopLevel.GetTopLevel(this)?.PlatformSettings?.HotkeyConfiguration;
+        var keymap = this.GetPlatformSettings()?.HotkeyConfiguration;
         bool Match(List<KeyGesture> gestures) => gestures.Any(g => g.Matches(e));
         if (keymap is not null && Match(keymap.SelectAll))
         {
@@ -359,7 +360,7 @@ public class TimeBox : TemplatedControl
         }
     }
 
-    protected override void OnLostFocus(RoutedEventArgs e)
+    protected override void OnLostFocus(FocusChangedEventArgs e)
     {
         for (int i = 0; i < 4; ++i)
         {

@@ -14,7 +14,7 @@
         <TextBox
             Name="format"
             Text="yyyy-MM-dd"
-            Watermark="Display Format" />
+            PlaceholderText="Display Format" />
         <TextBlock Text="Default" />
         <u:DateRangePicker
             Width="360"
@@ -30,6 +30,13 @@
         <TextBlock Text="Initialized with Binding" />
         <u:DateRangePicker
             Width="360"
+            DisplayFormat="{Binding #format.Text}"
+            SelectedEndDate="{Binding EndDate}"
+            SelectedStartDate="{Binding StartDate}" />
+        
+        <u:DateRangePicker
+            Width="360"
+            Classes="ClearButton"
             DisplayFormat="{Binding #format.Text}"
             SelectedEndDate="{Binding EndDate}"
             SelectedStartDate="{Binding StartDate}" />

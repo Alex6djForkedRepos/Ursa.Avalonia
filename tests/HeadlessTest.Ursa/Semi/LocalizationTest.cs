@@ -17,7 +17,7 @@ public class LocalizationTest
     {
         var window = new UrsaWindow();
         window.Show();
-        MessageBox.ShowOverlayAsync("Hello World", button: MessageBoxButton.YesNo, toplevelHashCode: window.GetHashCode());
+        OverlayMessageBox.ShowAsync("Hello World", button: MessageBoxButton.YesNo, toplevelHashCode: window.GetHashCode());
         Task.Delay(100).Wait();
         Dispatcher.UIThread.RunJobs();
         var dialog = window.GetVisualDescendants().OfType<MessageBoxControl>().SingleOrDefault();
@@ -30,14 +30,14 @@ public class LocalizationTest
     {
         var window = new UrsaWindow();
         window.Show();
-        MessageBox.ShowOverlayAsync("Hello World", button: MessageBoxButton.YesNo, toplevelHashCode: window.GetHashCode());
+        OverlayMessageBox.ShowAsync("Hello World", button: MessageBoxButton.YesNo, toplevelHashCode: window.GetHashCode());
         Task.Delay(100).Wait();
         Dispatcher.UIThread.RunJobs();
         var dialog = window.GetVisualDescendants().OfType<MessageBoxControl>().SingleOrDefault();
         var yesButton = dialog?.GetVisualDescendants().OfType<Button>().FirstOrDefault(b => b.Name == "PART_YesButton");
         Assert.Equal("是", yesButton?.Content?.ToString());
         Assert.NotNull(Application.Current);
-        SemiTheme.OverrideLocaleResources(Application.Current, new CultureInfo("en-US"));
+        UrsaSemiTheme.OverrideLocaleResources(Application.Current, new CultureInfo("en-US"));
         Assert.Equal("Yes", yesButton?.Content?.ToString());
     }
     
@@ -46,7 +46,7 @@ public class LocalizationTest
     {
         var window = new UrsaWindow();
         window.Show();
-        MessageBox.ShowOverlayAsync("Hello World", button: MessageBoxButton.YesNo, toplevelHashCode: window.GetHashCode());
+        OverlayMessageBox.ShowAsync("Hello World", button: MessageBoxButton.YesNo, toplevelHashCode: window.GetHashCode());
         Task.Delay(100).Wait();
         Dispatcher.UIThread.RunJobs();
         var dialog = window.GetVisualDescendants().OfType<MessageBoxControl>().SingleOrDefault();
@@ -54,9 +54,9 @@ public class LocalizationTest
         Assert.Equal("是", yesButton?.Content?.ToString());
         Assert.NotNull(Application.Current);
         // We expect there won't be anyone adding Armenian localization... Subject to change.
-        SemiTheme.OverrideLocaleResources(Application.Current, new CultureInfo("hy-AM"));
+        UrsaSemiTheme.OverrideLocaleResources(Application.Current, new CultureInfo("hy-AM"));
         Assert.Equal("是", yesButton?.Content?.ToString());
-        SemiTheme.OverrideLocaleResources(Application.Current, null);
+        UrsaSemiTheme.OverrideLocaleResources(Application.Current, null);
         Assert.Equal("是", yesButton?.Content?.ToString());
     }
     
@@ -65,21 +65,21 @@ public class LocalizationTest
     {
         var window = new UrsaWindow();
         window.Show();
-        MessageBox.ShowOverlayAsync("Hello World", button: MessageBoxButton.YesNo, toplevelHashCode: window.GetHashCode());
+        OverlayMessageBox.ShowAsync("Hello World", button: MessageBoxButton.YesNo, toplevelHashCode: window.GetHashCode());
         Task.Delay(100).Wait();
         Dispatcher.UIThread.RunJobs();
         var dialog = window.GetVisualDescendants().OfType<MessageBoxControl>().SingleOrDefault();
         var yesButton = dialog?.GetVisualDescendants().OfType<Button>().FirstOrDefault(b => b.Name == "PART_YesButton");
         Assert.Equal("是", yesButton?.Content?.ToString());
         Assert.NotNull(Application.Current);
-        SemiTheme.OverrideLocaleResources(window, new CultureInfo("en-US"));
+        UrsaSemiTheme.OverrideLocaleResources(window, new CultureInfo("en-US"));
         Assert.Equal("Yes", yesButton?.Content?.ToString());
     }
     
     [AvaloniaFact]
     public void SemiTheme_Localization_Behavior()
     {
-        var theme = new SemiTheme();
+        var theme = new UrsaSemiTheme();
         Assert.Null(theme.Locale);
         theme.Locale = new CultureInfo("en-US");
         Assert.Equal(new CultureInfo("en-US"), theme.Locale);

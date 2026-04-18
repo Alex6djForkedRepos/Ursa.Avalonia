@@ -12,7 +12,7 @@ namespace HeadlessTest.Ursa.Controls.AnchorTests;
 public class Tests
 {
     [AvaloniaFact]
-    public async void Click_Anchor_With_Mouse_Should_Update_Scroll_Offset()
+    public async Task Click_Anchor_With_Mouse_Should_Update_Scroll_Offset()
     {
         var window = new Window()
         {
@@ -44,7 +44,7 @@ public class Tests
     }
     
     [AvaloniaFact]
-    public async void Change_Scroll_Offset_Should_Update_Selected_Item()
+    public async Task Change_Scroll_Offset_Should_Update_Selected_Item()
     {
         var window = new Window()
         {
@@ -239,7 +239,7 @@ public class Tests
     }
 
     [AvaloniaFact]
-    public async void Scroll_To_Bottom_Should_Handle_Edge_Case()
+    public async Task Scroll_To_Bottom_Should_Handle_Edge_Case()
     {
         var window = new Window()
         {
