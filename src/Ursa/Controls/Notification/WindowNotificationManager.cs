@@ -114,7 +114,7 @@ public class WindowNotificationManager : WindowMessageManager, INotificationMana
     /// <param name="showIcon">whether to show the icon</param>
     /// <param name="showClose">whether to show the close button</param>
     /// <param name="onClick">an Action to be run when the notification is clicked</param>
-    /// <param name="onClose">an Action to be run when the notification is closed</param>
+    /// <param name="onClose">an Action to be run when the notification is closed, receiving the <see cref="MessageCloseReason"/></param>
     /// <param name="classes">style classes to apply</param>
     public async void Show(
         object content,
@@ -123,7 +123,7 @@ public class WindowNotificationManager : WindowMessageManager, INotificationMana
         bool showIcon = true,
         bool showClose = true,
         Action? onClick = null,
-        Action? onClose = null,
+        Action<MessageCloseReason>? onClose = null,
         string[]? classes = null)
     {
         Dispatcher.UIThread.VerifyAccess();
@@ -146,10 +146,9 @@ public class WindowNotificationManager : WindowMessageManager, INotificationMana
             }
         }
 
-        notificationControl.MessageClosed += (sender, _) =>
+        notificationControl.MessageClosed += (sender, args) =>
         {
-            onClose?.Invoke();
-
+            onClose?.Invoke(args.Reason);
             _items?.Remove(sender);
         };
 
@@ -161,7 +160,7 @@ public class WindowNotificationManager : WindowMessageManager, INotificationMana
 
             if (_items?.OfType<NotificationCard>().Count(i => !i.IsClosing) > MaxItems)
             {
-                _items.OfType<NotificationCard>().First(i => !i.IsClosing).Close();
+                _items.OfType<NotificationCard>().First(i => !i.IsClosing).Close(MessageCloseReason.Displaced);
             }
         });
 
@@ -172,7 +171,7 @@ public class WindowNotificationManager : WindowMessageManager, INotificationMana
 
         await Task.Delay(expiration ?? TimeSpan.FromSeconds(3));
 
-        notificationControl.Close();
+        notificationControl.Close(MessageCloseReason.Timeout);
     }
 
     /// <inheritdoc/>
