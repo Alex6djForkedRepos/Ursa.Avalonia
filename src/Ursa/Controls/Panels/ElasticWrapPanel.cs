@@ -1,8 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
 using Avalonia.Layout;
-using Avalonia.Utilities;
 using Irihi.Avalonia.Shared.Helpers;
 using static System.Math;
 
@@ -59,15 +57,13 @@ public class ElasticWrapPanel : WrapPanel
     public static readonly StyledProperty<bool> IsFillVerticalProperty =
         AvaloniaProperty.Register<ElasticWrapPanel, bool>(nameof(IsFillVertical));
 
-    private int _lineCount;
-
     public static readonly DirectProperty<ElasticWrapPanel, int> LineCountProperty = AvaloniaProperty.RegisterDirect<ElasticWrapPanel, int>(
         nameof(LineCount), o => o.LineCount);
 
     public int LineCount
     {
-        get => _lineCount;
-        private set => SetAndRaise(LineCountProperty, ref _lineCount, value);
+        get;
+        private set => SetAndRaise(LineCountProperty, ref field, value);
     }
 
     #endregion
@@ -408,7 +404,7 @@ public class ElasticWrapPanel : WrapPanel
 
                     double layoutSlotU = childSize.UVSize.U + childSize.ULengthCount * adaptULength;
                     double layoutSlotV = isAdaptV ? linevV : childSize.UVSize.V;
-                    if (ElasticWrapPanel.GetIsFixToRB(child) == false)
+                    if (GetIsFixToRB(child) == false)
                     {
                         child.Arrange(new Rect(
                             isHorizontal ? u : accumulatedV,

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
 using Avalonia;
 using Avalonia.Controls.Templates;
 using Avalonia.Controls;
@@ -19,6 +20,8 @@ public partial class MultiAutoCompleteBox
                 defaultValue: 0,
                 defaultBindingMode:BindingMode.TwoWay));
 
+        [SuppressMessage("AvaloniaProperty", "AVP1013",
+            Justification = "Obsolete property alias for backward compatibility.")]
         public static readonly StyledProperty<string?> PlaceholderTextProperty =
             TextBox.PlaceholderTextProperty.AddOwner<MultiAutoCompleteBox>();
 
@@ -199,7 +202,7 @@ public partial class MultiAutoCompleteBox
             AvaloniaProperty.Register<MultiAutoCompleteBox, IDataTemplate?>(nameof(SelectedItemTemplate));
 
         /// <summary>
-        /// Gets or sets the <see cref="T:Avalonia.DataTemplate" /> used to display each item in SelectedItems. 
+        /// Gets or sets the <see cref="T:IDataTemplate" /> used to display each item in SelectedItems. 
         /// </summary>
         [InheritDataTypeFromItems(nameof(SelectedItems))]
         public IDataTemplate? SelectedItemTemplate
@@ -255,10 +258,10 @@ public partial class MultiAutoCompleteBox
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="T:Avalonia.DataTemplate" /> used
+        /// Gets or sets the <see cref="T:IDataTemplate" /> used
         /// to display each item in the drop-down portion of the control.
         /// </summary>
-        /// <value>The <see cref="T:Avalonia.DataTemplate" /> used to
+        /// <value>The <see cref="T:IDataTemplate" /> used to
         /// display each item in the drop-down. The default is null.</value>
         /// <remarks>
         /// You use the ItemTemplate property to specify the visualization
@@ -366,20 +369,20 @@ public partial class MultiAutoCompleteBox
         /// </remarks>
         public string? SearchText
         {
-            get => _searchText;
+            get;
             private set
             {
                 try
                 {
                     _allowWrite = true;
-                    SetAndRaise(SearchTextProperty, ref _searchText, value);
+                    SetAndRaise(SearchTextProperty, ref field, value);
                 }
                 finally
                 {
                     _allowWrite = false;
                 }
             }
-        }
+        } = string.Empty;
 
         /// <summary>
         /// Gets or sets how the text in the text box is used to filter items
@@ -415,6 +418,8 @@ public partial class MultiAutoCompleteBox
         }
 
         [Obsolete("Use PlaceholderText instead.")]
+        [SuppressMessage("AvaloniaProperty", "AVP1012",
+            Justification = "Obsolete property alias for backward compatibility.")]
         public string? Watermark
         {
             get => PlaceholderText;

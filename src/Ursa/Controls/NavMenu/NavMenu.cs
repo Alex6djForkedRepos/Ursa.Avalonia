@@ -74,9 +74,9 @@ public class NavMenu : ItemsControl, ICustomKeyboardNavigation
     public static readonly RoutedEvent<SelectionChangedEventArgs> SelectionChangedEvent =
         RoutedEvent.Register<NavMenu, SelectionChangedEventArgs>(nameof(SelectionChanged), RoutingStrategies.Bubble);
 
-    private ItemsPresenter? _itemsPresenter = null;
-    private bool _isSelectionFromUI = false;
-    private bool _isNavigatingMenu = false;
+    private ItemsPresenter? _itemsPresenter;
+    private bool _isSelectionFromUI;
+    private bool _isNavigatingMenu;
 
     static NavMenu()
     {
@@ -294,9 +294,9 @@ public class NavMenu : ItemsControl, ICustomKeyboardNavigation
         }
 
         if (item.DataContext is not null && item.DataContext != DataContext)
-            SelectedItem = item.DataContext;
+            SetCurrentValue(SelectedItemProperty, item.DataContext);
         else
-            SelectedItem = item;
+            SetCurrentValue(SelectedItemProperty, item);
         item.BringIntoView();
         _isSelectionFromUI = false;
     }
@@ -436,15 +436,15 @@ public class NavMenu : ItemsControl, ICustomKeyboardNavigation
     public NavMenuItem? GetContainerForItem(object? item)
     {
         if (item == null) return null;
-        return GetContainerForItem(this, item);
+        return GetContainerForItemInternal(this, item);
 
-        static NavMenuItem? GetContainerForItem(ItemsControl control, object item)
+        static NavMenuItem? GetContainerForItemInternal(ItemsControl control, object item)
         {
             if (ContainerFromItem(control, item) is NavMenuItem container) return container;
 
             var children = GetRealizedContainers(control);
             foreach (var child in children)
-                if (GetContainerForItem(child, item) is { } childContainer) return childContainer;
+                if (GetContainerForItemInternal(child, item) is { } childContainer) return childContainer;
 
             return null;
         }
@@ -509,7 +509,7 @@ public class NavMenu : ItemsControl, ICustomKeyboardNavigation
 
     internal bool CanChangeSelection(NavMenuItem item)
     {
-        object? newSelection = null;
+        object? newSelection;
         if (item.DataContext is not null && item.DataContext != DataContext)
             newSelection = item.DataContext;
         else

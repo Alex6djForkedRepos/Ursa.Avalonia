@@ -1,5 +1,3 @@
-using System;
-
 namespace Gma.QrCodeNet.Encoding.Versions;
 
 internal struct ErrorCorrectionBlocks
@@ -8,7 +6,7 @@ internal struct ErrorCorrectionBlocks
 		: this()
 	{
 		NumErrorCorrectionCodewards = numErrorCorrectionCodewords;
-		ECBlock = new ErrorCorrectionBlock[] { ecBlock };
+		ECBlock = [ecBlock];
 
 		Initialize();
 	}
@@ -17,7 +15,7 @@ internal struct ErrorCorrectionBlocks
 		: this()
 	{
 		NumErrorCorrectionCodewards = numErrorCorrectionCodewords;
-		ECBlock = new ErrorCorrectionBlock[] { ecBlock1, ecBlock2 };
+		ECBlock = [ecBlock1, ecBlock2];
 
 		Initialize();
 	}

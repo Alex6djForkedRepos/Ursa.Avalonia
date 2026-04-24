@@ -4,12 +4,11 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Interactivity;
-using Avalonia.Media;
 using Irihi.Avalonia.Shared.Common;
-using Irihi.Avalonia.Shared.Contracts;
 using Irihi.Avalonia.Shared.Helpers;
 
 namespace Ursa.Controls;
+#pragma warning disable AVP1002
 
 public abstract class TimePickerBase<T> : TimePickerBase where T : struct
 {
@@ -80,7 +79,7 @@ public abstract class TimePickerBase<T> : TimePickerBase where T : struct
             _pendingTime = e.NewTime;
         else
             SetCurrentValue(SelectedTimeProperty,
-                e.NewTime.HasValue ? (T?)FromTimeOnly(e.NewTime.Value) : (T?)null);
+                e.NewTime.HasValue ? FromTimeOnly(e.NewTime.Value) : null);
     }
 
     private void SyncTimeToText()
@@ -95,7 +94,7 @@ public abstract class TimePickerBase<T> : TimePickerBase where T : struct
         var format = DisplayFormat ?? DEFAULT_TIME_DISPLAY_FORMAT;
         if (string.IsNullOrWhiteSpace(_textBox?.Text))
         {
-            SetCurrentValue(SelectedTimeProperty, (T?)null);
+            SetCurrentValue(SelectedTimeProperty, null);
             _presenter?.SyncTime(null);
             return;
         }
@@ -107,7 +106,7 @@ public abstract class TimePickerBase<T> : TimePickerBase where T : struct
         }
         else
         {
-            SetCurrentValue(SelectedTimeProperty, (T?)null);
+            SetCurrentValue(SelectedTimeProperty, null);
             _presenter?.SyncTime(null);
         }
     }
@@ -170,7 +169,7 @@ public abstract class TimePickerBase<T> : TimePickerBase where T : struct
     public override void Confirm()
     {
         if (NeedConfirmation && _pendingTime.HasValue)
-            SetCurrentValue(SelectedTimeProperty, (T?)FromTimeOnly(_pendingTime.Value));
+            SetCurrentValue(SelectedTimeProperty, FromTimeOnly(_pendingTime.Value));
         SetCurrentValue(IsDropdownOpenProperty, false);
     }
 
@@ -190,7 +189,7 @@ public abstract class TimePickerBase<T> : TimePickerBase where T : struct
 
     public override void Clear()
     {
-        SetCurrentValue(SelectedTimeProperty, (T?)null);
+        SetCurrentValue(SelectedTimeProperty, null);
         _presenter?.SyncTime(null);
     }
 }

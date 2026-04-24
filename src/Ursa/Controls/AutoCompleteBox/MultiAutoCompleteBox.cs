@@ -2,11 +2,11 @@
 // This source is subject to the Microsoft Public License (Ms-PL) and MIT License.
 // All other rights reserved.
 
+using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Collections;
 using Avalonia;
 using Avalonia.Collections;
 using Avalonia.Controls;
@@ -144,7 +144,6 @@ public partial class MultiAutoCompleteBox : TemplatedControl, IInnerContentContr
     /// </summary>
     private bool _popupHasOpened;
 
-    private string? _searchText = string.Empty;
     private bool _settingItemTemplateFromValueMemberBinding;
 
     /// <summary>
@@ -512,11 +511,11 @@ public partial class MultiAutoCompleteBox : TemplatedControl, IInnerContentContr
 
     /// <summary>
     ///     Returns the
-    ///     <see cref="T:Avalonia.Controls.ISelectionAdapter" /> part, if
+    ///     <see cref="T:ISelectionAdapter" /> part, if
     ///     possible.
     /// </summary>
     /// <returns>
-    ///     A <see cref="T:Avalonia.Controls.ISelectionAdapter" /> object,
+    ///     A <see cref="T:ISelectionAdapter" /> object,
     ///     if possible. Otherwise, null.
     /// </returns>
     protected virtual ISelectionAdapter? GetSelectionAdapterPart(INameScope nameScope)

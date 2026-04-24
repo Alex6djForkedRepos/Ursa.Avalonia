@@ -2,12 +2,11 @@
     x:Class="Ursa.Demo.Pages.FormDemo"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:common="clr-namespace:Ursa.Common;assembly=Ursa"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:u="https://irihi.tech/ursa"
     xmlns:vm="clr-namespace:Ursa.Demo.ViewModels;assembly=Ursa.Demo"
-    xmlns:converters="clr-namespace:Ursa.Demo.Converters"
+    xmlns:dataTemplates="clr-namespace:Ursa.Demo.DataTemplates"
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:CompileBindings="True"
@@ -41,7 +40,7 @@
                 <u:FormGroup Header="Education Information">
                     <TextBox Width="300" u:FormItem.Label="Collage" />
                     <u:FormItem Label="Study Time">
-                        <u:DateRangePicker Width="300"></u:DateRangePicker>
+                        <u:DateRangePicker Width="300" />
                     </u:FormItem>
                 </u:FormGroup>
                 <Button Content="Submit" Theme="{DynamicResource SolidButton}" u:FormItem.NoLabel="True" HorizontalAlignment="Stretch"/>
@@ -63,7 +62,7 @@
                     </Style>
                 </u:Form.Styles>
                 <u:Form.ItemTemplate>
-                    <converters:FormDataTemplateSelector>
+                    <dataTemplates:FormDataTemplateSelector>
                         <DataTemplate x:Key="{x:Type vm:FormTextViewModel}" DataType="vm:FormTextViewModel">
                             <TextBox Text="{Binding Value}"/>
                         </DataTemplate>
@@ -73,7 +72,7 @@
                         <DataTemplate x:Key="{x:Type vm:FormDateRangeViewModel}" DataType="vm:FormDateRangeViewModel">
                             <u:DateRangePicker SelectedStartDate="{Binding Start}" SelectedEndDate="{Binding End}"/>
                         </DataTemplate>
-                    </converters:FormDataTemplateSelector>
+                    </dataTemplates:FormDataTemplateSelector>
                 </u:Form.ItemTemplate>
             </u:Form>
         </StackPanel>

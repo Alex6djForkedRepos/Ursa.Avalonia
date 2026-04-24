@@ -1,11 +1,9 @@
 using Avalonia;
 using Avalonia.Animation;
 using Avalonia.Animation.Easings;
-using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Styling;
 using Avalonia.VisualTree;
-using Irihi.Avalonia.Shared.Contracts;
 using Irihi.Avalonia.Shared.Shapes;
 using Ursa.Common;
 using Ursa.Controls.OverlayShared;
@@ -71,7 +69,7 @@ public partial class OverlayDialogHost
         control.Arrange(new Rect(control.DesiredSize));
         SetDrawerPosition(control);
         _modalCount++;
-        IsInModalStatus = _modalCount > 0;
+        SetCurrentValue(IsInModalStatusProperty, _modalCount > 0);
         control.AddHandler(OverlayFeedbackElement.ClosedEvent, OnDrawerControlClosing);
         var animation = CreateAnimation(control.Bounds.Size, control.Position);
         if (IsAnimationDisabled)
@@ -173,8 +171,8 @@ public partial class OverlayDialogHost
         }
 
         var targetProperty = position == Position.Left || position == Position.Right
-            ? Canvas.LeftProperty
-            : Canvas.TopProperty;
+            ? LeftProperty
+            : TopProperty;
         var animation = new Animation
         {
             Easing = new CubicEaseOut(),
@@ -207,7 +205,7 @@ public partial class OverlayDialogHost
             if (layer.Mask is not null)
             {
                 _modalCount--;
-                IsInModalStatus = _modalCount > 0;
+                SetCurrentValue(IsInModalStatusProperty, _modalCount > 0);
                 layer.Mask.RemoveHandler(PointerPressedEvent, ClickMaskToCloseDialog);
                 layer.Mask.RemoveHandler(PointerReleasedEvent, DragMaskToMoveWindow);
                 if (!IsAnimationDisabled)

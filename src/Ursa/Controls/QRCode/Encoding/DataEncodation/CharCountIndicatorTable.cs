@@ -1,5 +1,3 @@
-using System;
-
 namespace Gma.QrCodeNet.Encoding.DataEncodation;
 
 internal static class CharCountIndicatorTable
@@ -7,7 +5,7 @@ internal static class CharCountIndicatorTable
 	/// <remarks>ISO/IEC 18004:2000 Table 3 Page 18</remarks>
 	public static int[] GetCharCountIndicatorSet()
 	{
-		return new int[] { 8, 16, 16 };
+		return [8, 16, 16];
 	}
 
 	public static int GetBitCountInCharCountIndicator(int version)
