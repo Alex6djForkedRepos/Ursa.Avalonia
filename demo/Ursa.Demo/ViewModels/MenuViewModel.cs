@@ -101,6 +101,7 @@ public class MenuViewModel : ViewModelBase
                     new() { MenuHeader = "Number Displayer", Key = MenuKeys.MenuKeyNumberDisplayer, Status = "Updated" },
                     new() { MenuHeader = "Qr Code", Key = MenuKeys.MenuKeyQrCode, Status = "New" },
                     new() { MenuHeader = "Scroll To", Key = MenuKeys.MenuKeyScrollToButton },
+                    new() { MenuHeader = "Theme Variant Mapper", Key = MenuKeys.MenuKeyThemeVariantMapper, Status = "New" },
                     new() { MenuHeader = "Timeline", Key = MenuKeys.MenuKeyTimeline },
                     new() { MenuHeader = "TwoTonePathIcon", Key = MenuKeys.MenuKeyTwoTonePathIcon }
                 }
@@ -164,6 +165,7 @@ public static class MenuKeys
     public const string MenuKeySkeleton = "Skeleton";
     public const string MenuKeyTagInput = "TagInput";
     public const string MenuKeyThemeToggler = "ThemeToggler";
+    public const string MenuKeyThemeVariantMapper = "ThemeVariantMapper";
     public const string MenuKeyTimeBox = "TimeBox";
     public const string MenuKeyTimeline = "Timeline";
     public const string MenuKeyTimeOnlyPicker = "TimeOnlyPicker";
