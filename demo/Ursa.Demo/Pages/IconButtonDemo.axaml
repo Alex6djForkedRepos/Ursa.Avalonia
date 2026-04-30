@@ -10,7 +10,8 @@
     d:DesignHeight="NaN"
     d:DesignWidth="1200"
     x:DataType="vm:IconButtonDemoViewModel"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    xmlns:controls="clr-namespace:Ursa.Demo.Controls">
     <Design.DataContext>
         <vm:IconButtonDemoViewModel />
     </Design.DataContext>
@@ -39,7 +40,9 @@
         </Style>
     </Control.Styles>
     <ScrollViewer>
-        <StackPanel Margin="20" Spacing="8" HorizontalAlignment="Left">
+        <StackPanel Margin="20" Spacing="8" HorizontalAlignment="Stretch">
+
+            <controls:PageMetadataView DataContext="{Binding PageMetadata}"/>
 
             <HeaderedContentControl Theme="{StaticResource GroupBox}">
                 <HeaderedContentControl.Header>

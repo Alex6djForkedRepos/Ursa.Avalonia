@@ -1,14 +1,17 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:collections="clr-namespace:Avalonia.Collections;assembly=Avalonia.Base"
-             xmlns:iri="https://irihi.tech/shared"
-             xmlns:viewModels="clr-namespace:Ursa.Demo.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800"
-             d:DesignHeight="450"
-             x:DataType="viewModels:AboutUsDemoViewModel"
-             x:Class="Ursa.Demo.Pages.AboutUsDemo">
+<UserControl
+    x:Class="Ursa.Demo.Pages.AboutUsDemo"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:collections="clr-namespace:Avalonia.Collections;assembly=Avalonia.Base"
+    xmlns:controls="clr-namespace:Ursa.Demo.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iri="https://irihi.tech/shared"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Ursa.Demo.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="viewModels:AboutUsDemoViewModel"
+    mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.ThemeDictionaries>
@@ -100,10 +103,10 @@
                         Grid.Row="0"
                         Grid.RowSpan="2"
                         Grid.Column="0"
-                        Fill="{DynamicResource TextBlockSecondaryForeground}"
                         Width="96"
                         Margin="0,0,24,0"
-                        VerticalAlignment="Center" />
+                        VerticalAlignment="Center"
+                        Fill="{DynamicResource TextBlockSecondaryForeground}" />
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="1"
@@ -146,8 +149,8 @@
                         Theme="{DynamicResource TileButton}">
                         <StackPanel HorizontalAlignment="Left">
                             <TextBlock Classes="TileTitle" Text="Semi" />
-                            <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
-                                <Label Theme="{DynamicResource TagLabel}" Classes="Blue Ghost">Open Source</Label>
+                            <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                <Label Classes="Blue Ghost" Theme="{DynamicResource TagLabel}">Open Source</Label>
                             </StackPanel>
                             <TextBlock Text="开箱即用的独立主题库" />
                             <TextBlock Text="A ready-to-use standalone theme library" />
@@ -160,8 +163,8 @@
                         Theme="{DynamicResource TileButton}">
                         <StackPanel HorizontalAlignment="Left">
                             <TextBlock Classes="TileTitle" Text="Ursa" />
-                            <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
-                                <Label Theme="{DynamicResource TagLabel}" Classes="Blue Ghost">Open Source</Label>
+                            <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                <Label Classes="Blue Ghost" Theme="{DynamicResource TagLabel}">Open Source</Label>
                             </StackPanel>
                             <TextBlock Text="高性能企业级桌面客户端控件库" />
                             <TextBlock Text="High-performance enterprise level control library for desktop apps" />
@@ -174,8 +177,8 @@
                         Theme="{DynamicResource TileButton}">
                         <StackPanel HorizontalAlignment="Left">
                             <TextBlock Classes="TileTitle" Text="Mantra" />
-                            <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
-                                <Label Theme="{DynamicResource TagLabel}" Classes="Purple Ghost">Commercial</Label>
+                            <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                <Label Classes="Purple Ghost" Theme="{DynamicResource TagLabel}">Commercial</Label>
                             </StackPanel>
                             <TextBlock Text="高性能文字排版渲染控件库" />
                             <TextBlock Text="High-performance typography control library" />
@@ -188,8 +191,8 @@
                         Theme="{DynamicResource TileButton}">
                         <StackPanel HorizontalAlignment="Left">
                             <TextBlock Classes="TileTitle" Text="Huska" />
-                            <StackPanel Orientation="Horizontal" Margin="0 0 0 8">
-                                <Label Theme="{DynamicResource TagLabel}" Classes="Purple Ghost">Commercial</Label>
+                            <StackPanel Margin="0,0,0,8" Orientation="Horizontal">
+                                <Label Classes="Purple Ghost" Theme="{DynamicResource TagLabel}">Commercial</Label>
                             </StackPanel>
                             <TextBlock Text="手绘风格主题库" />
                             <TextBlock Text="Hand-drawing theme library" />
@@ -201,13 +204,13 @@
         <StackPanel
             Grid.Row="1"
             Margin="0,16"
-            Spacing="32"
             HorizontalAlignment="Center"
-            Orientation="Horizontal">
+            Orientation="Horizontal"
+            Spacing="32">
             <StackPanel Orientation="Horizontal">
                 <HyperlinkButton
-                    Classes="WithIcon"
                     VerticalAlignment="Center"
+                    Classes="WithIcon"
                     Content="Homepage"
                     NavigateUri="https://irihi.tech">
                     <HyperlinkButton.Styles>

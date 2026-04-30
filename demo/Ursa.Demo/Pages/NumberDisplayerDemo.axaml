@@ -10,9 +10,11 @@
     d:DesignWidth="800"
     x:CompileBindings="True"
     x:DataType="vm:NumberDisplayerDemoViewModel"
-    mc:Ignorable="d">
-    <StackPanel HorizontalAlignment="Left">
-        <Button Command="{Binding IncreaseCommand}">Change</Button>
+    mc:Ignorable="d"
+    xmlns:controls="clr-namespace:Ursa.Demo.Controls">
+    <StackPanel Margin="20" Spacing="20">
+        <controls:PageMetadataView DataContext="{Binding PageMetadata}"/>
+        <Button Command="{Binding IncreaseCommand}" HorizontalAlignment="Left">Change</Button>
         <u:Int32Displayer Value="{Binding Value}" />
         <u:Int64Displayer Value="{Binding LongValue}" />
         <u:DoubleDisplayer StringFormat="N2" Value="{Binding DoubleValue}" />

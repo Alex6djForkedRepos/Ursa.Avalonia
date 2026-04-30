@@ -9,34 +9,38 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     x:DataType="viewModels:DateOnlyRangePickerDemoViewModel"
-    mc:Ignorable="d">
-    <StackPanel HorizontalAlignment="Left">
-        <TextBox
-            Name="format"
-            Text="yyyy-MM-dd"
-            PlaceholderText="Display Format" />
-        <TextBlock Text="Default" />
-        <u:DateOnlyRangePicker
-            Width="360"
-            DisplayFormat="{Binding #format.Text}"
-            SelectedEndDate="{Binding EndDate}"
-            SelectedStartDate="{Binding StartDate}" />
-        <TextBlock Text="Clear Button" />
-        <u:DateOnlyRangePicker
-            Width="360"
-            Classes="ClearButton"
-            DisplayFormat="{Binding #format.Text}" />
-        <TextBlock Text="Initialized with Binding" />
-        <u:DateOnlyRangePicker
-            Width="360"
-            DisplayFormat="{Binding #format.Text}"
-            SelectedEndDate="{Binding EndDate}"
-            SelectedStartDate="{Binding StartDate}" />
-        <u:DateOnlyRangePicker
-            Width="360"
-            Classes="ClearButton"
-            DisplayFormat="{Binding #format.Text}"
-            SelectedEndDate="{Binding EndDate}"
-            SelectedStartDate="{Binding StartDate}" />
+    mc:Ignorable="d"
+    xmlns:controls="clr-namespace:Ursa.Demo.Controls">
+    <StackPanel Margin="20" Spacing="20">
+        <controls:PageMetadataView DataContext="{Binding PageMetadata}"/>
+        <StackPanel HorizontalAlignment="Left">
+            <TextBox
+                Name="format"
+                Text="yyyy-MM-dd"
+                PlaceholderText="Display Format" />
+            <TextBlock Text="Default" />
+            <u:DateOnlyRangePicker
+                Width="360"
+                DisplayFormat="{Binding #format.Text}"
+                SelectedEndDate="{Binding EndDate}"
+                SelectedStartDate="{Binding StartDate}" />
+            <TextBlock Text="Clear Button" />
+            <u:DateOnlyRangePicker
+                Width="360"
+                Classes="ClearButton"
+                DisplayFormat="{Binding #format.Text}" />
+            <TextBlock Text="Initialized with Binding" />
+            <u:DateOnlyRangePicker
+                Width="360"
+                DisplayFormat="{Binding #format.Text}"
+                SelectedEndDate="{Binding EndDate}"
+                SelectedStartDate="{Binding StartDate}" />
+            <u:DateOnlyRangePicker
+                Width="360"
+                Classes="ClearButton"
+                DisplayFormat="{Binding #format.Text}"
+                SelectedEndDate="{Binding EndDate}"
+                SelectedStartDate="{Binding StartDate}" />
+        </StackPanel>
     </StackPanel>
 </UserControl>

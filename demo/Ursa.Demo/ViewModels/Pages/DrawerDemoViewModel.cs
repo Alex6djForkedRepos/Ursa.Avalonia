@@ -1,0 +1,88 @@
+using System.Threading.Tasks;
+using System.Windows.Input;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Ursa.Common;
+using Ursa.Controls;
+using Ursa.Controls.Options;
+using Ursa.Demo.Dialogs;
+
+using Ursa.Demo.ViewModels.Controls;
+namespace Ursa.Demo.ViewModels;
+
+public partial class DrawerDemoViewModel : ObservableObject
+{
+    public PageMetadataViewModel PageMetadata { get; set; } = new PageMetadataViewModel()
+    {
+        Title = "Drawer",
+        Description = "Drawer is a panel that slides in from the edge of the screen.",
+        Breadcrumbs = ["Dialog & Feedbacks", "Drawer"],
+        Tags = ["Drawer", "Panel", "Overlay"],
+        DemoViewUrl = "https://github.com/irihitech/Ursa.Avalonia/blob/main/demo/Ursa.Demo/Pages/DrawerDemo.axaml",
+        DemoViewModelUrl = "https://github.com/irihitech/Ursa.Avalonia/blob/main/demo/Ursa.Demo/ViewModels/Pages/DrawerDemoViewModel.cs",
+        InlineXamlSupport = false,
+        MvvmSupport = true,
+        AvaloniaExclusive = true,
+    };
+
+    public ICommand ShowDialogCommand { get; set; }
+
+    [ObservableProperty] private Position _position;
+    [ObservableProperty] private DialogButton _buttons;
+
+    [ObservableProperty] private bool _canLightDismiss;
+    [ObservableProperty] private bool _isModal;
+    [ObservableProperty] private bool? _isCloseButtonVisible;
+    [ObservableProperty] private string? _title;
+
+    [ObservableProperty] private bool _custom;
+    [ObservableProperty] private bool _isLocal;
+    [ObservableProperty] private bool _canResize;
+
+    public DrawerDemoViewModel()
+    {
+        ShowDialogCommand = new AsyncRelayCommand(ShowDefaultDialog);
+        Position = Position.Right;
+        IsModal = true;
+        Title = "Add New";
+    }
+
+    private async Task ShowDefaultDialog()
+    {
+        var options = new DrawerOptions()
+        {
+            Position = Position,
+            Buttons = Buttons,
+            CanLightDismiss = CanLightDismiss,
+            IsCloseButtonVisible = IsCloseButtonVisible,
+            Title = Title,
+            CanResize = CanResize,
+        };
+        var hostId = IsLocal ? "LocalHost" : null;
+        if (Custom)
+        {
+            var vm = new CustomDemoDialogViewModel();
+            if (IsModal)
+            {
+                await OverlayDrawer.ShowCustomAsync<CustomDemoDialog, CustomDemoDialogViewModel, object?>(vm, hostId, options);
+            }
+            else
+            {
+                OverlayDrawer.ShowCustom<CustomDemoDialog, CustomDemoDialogViewModel>(vm, hostId, options);
+            }
+        }
+        else
+        {
+            var vm = new DefaultDemoDialogViewModel();
+            if (IsModal)
+            {
+                await OverlayDrawer.ShowStandardAsync<DefaultDemoDialog, DefaultDemoDialogViewModel>(vm, hostId, options);
+            }
+            else
+            {
+                OverlayDrawer.ShowStandard<DefaultDemoDialog, DefaultDemoDialogViewModel>(vm, hostId, options);
+            }
+        }
+        
+    }
+}
