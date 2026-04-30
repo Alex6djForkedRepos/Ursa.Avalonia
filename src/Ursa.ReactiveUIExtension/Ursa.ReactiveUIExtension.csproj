@@ -14,7 +14,7 @@
 
             这个是一个Ursa拓展包。这个包整合并互相兼容了UrsaWindow和UrsaView与ReactiveUI.Avalonia的功能。【ReactiveUI.Avalonia参见：https://github.com/reactiveui/ReactiveUI.Avalonia】
         </Description>
-        <Version>1.1.0</Version>
+        <Version>2.0.0</Version>
         <RepositoryUrl>https://github.com/irihitech/Ursa.Avalonia</RepositoryUrl>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
